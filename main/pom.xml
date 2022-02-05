@@ -126,6 +126,10 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -150,6 +154,11 @@
             <groupId>dev.kotx</groupId>
             <artifactId>flylib-reloaded</artifactId>
             <version>0.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.TeamKun</groupId>
+            <artifactId>ConfigLib</artifactId>
+            <version>0.7.1</version>
         </dependency>
     </dependencies>
 </project>
