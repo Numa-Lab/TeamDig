@@ -11,7 +11,7 @@ class Teamdig : JavaPlugin() {
 
     init {
         flyLib {
-            command(MainCommand("teamdig", ConfigCommandBuilder(config).build()))
+            command(MainCommand(config, ConfigCommandBuilder(config).build()))
         }
     }
 
@@ -21,5 +21,6 @@ class Teamdig : JavaPlugin() {
 
     override fun onDisable() {
         // Plugin shutdown logic
+        config.saveConfigIfPresent()
     }
 }

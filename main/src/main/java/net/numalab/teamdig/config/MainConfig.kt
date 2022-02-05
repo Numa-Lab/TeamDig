@@ -5,7 +5,7 @@ import net.kunmc.lab.configlib.value.BooleanValue
 import org.bukkit.plugin.Plugin
 
 class MainConfig(plugin: Plugin) : BaseConfig(plugin) {
-    val isEnabled = BooleanValue(false)
+    var isEnabled = BooleanValue(false)
     init {
         saveConfigIfAbsent()
         loadConfig()
