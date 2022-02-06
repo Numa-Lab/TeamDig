@@ -10,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin
 
 class Teamdig : JavaPlugin() {
     val config = MainConfig(this)
+    lateinit var scoreboard: ScoreBoardOperator
 
     init {
         flyLib {
@@ -24,6 +25,7 @@ class Teamdig : JavaPlugin() {
 
     override fun onEnable() {
         FallCaller.getInstance(config, this)
+        scoreboard = ScoreBoardOperator(config, this, server.getWorld("world"))
         // Plugin startup logic
     }
 
