@@ -4,7 +4,6 @@ import dev.kotx.flylib.command.Command
 import net.numalab.teamdig.config.MainConfig
 import net.numalab.teamdig.stacker.FilledBlockSet
 import net.numalab.teamdig.stacker.SquareStacker
-import net.numalab.teamdig.stacker.center
 import org.bukkit.Bukkit
 import org.bukkit.Material
 

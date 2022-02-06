@@ -23,6 +23,7 @@ class Teamdig : JavaPlugin() {
     }
 
     override fun onEnable() {
+        FallCaller.getInstance(config, this)
         // Plugin startup logic
     }
 
