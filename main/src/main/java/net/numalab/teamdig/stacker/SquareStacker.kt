@@ -25,8 +25,6 @@ class SquareStacker : BaseStacker() {
                 .map { Location(world, it.first.toDouble() + 0.5, startHeight.toDouble(), it.second.toDouble() + 0.5) }
         val materials = blockSet.generate(allPos.size)
 
-        println("Spawning Size:${allPos.size}")
-
         allPos.forEachIndexed { index, location ->
             spawnFallingSand(materials[index], location)
         }
