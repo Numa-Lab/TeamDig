@@ -2,6 +2,7 @@ package net.numalab.teamdig
 
 import net.numalab.teamdig.config.BlockXZRange
 import net.numalab.teamdig.config.MainConfig
+import net.numalab.teamdig.stacker.DefaultBlockSet
 import net.numalab.teamdig.stacker.FilledBlockSet
 import net.numalab.teamdig.stacker.SquareStacker
 import org.bukkit.Bukkit
@@ -38,10 +39,10 @@ class FallCaller(val config: MainConfig, plugin: Teamdig) : Listener {
     }
 
     private val stacker = SquareStacker()
-    private val blockSet = FilledBlockSet(Material.STONE)
+    private val blockSet = DefaultBlockSet(0.0)
 
     @EventHandler
-    fun onDamage(e: EntityDamageEvent){
+    fun onDamage(e: EntityDamageEvent) {
         if (e.entity is Player) {
             onDamage(e.entity as Player, e.damage)
         }
@@ -61,17 +62,26 @@ class FallCaller(val config: MainConfig, plugin: Teamdig) : Listener {
 
     private fun onDamage(player: Player, amount: Double) {
         val teamRange = getPlayerTeamConfig(player) ?: return
-        doFall(teamRange.second, player.world)
+        doFall(
+            teamRange.second,
+            config.damageBlockRateConst.value() * amount / 100.0,
+            config.damageStackHeight.value(),
+            player.world
+        )
     }
 
     private fun onDeath(player: Player) {
         val teamRange = getPlayerTeamConfig(player) ?: return
-        doFall(teamRange.second, player.world)
+        doFall(teamRange.second, config.deadBlockRate.value() / 100.0, config.deadStackHeight.value(), player.world)
     }
 
-    private fun doFall(range: BlockXZRange, world: World) {
+    /**
+     * @param blockRate[%]
+     */
+    private fun doFall(range: BlockXZRange, blockRate: Double, stackHeight: Int, world: World) {
         if (config.isEnabled.value()) {
-            stacker.stack(world, range.first, range.second, blockSet, 1, 256)
+            blockSet.airRate = 1 - blockRate
+            stacker.stack(world, range.first, range.second, blockSet, stackHeight, 256)
         }
     }
 }

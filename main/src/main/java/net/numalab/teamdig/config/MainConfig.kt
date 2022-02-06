@@ -1,10 +1,7 @@
 package net.numalab.teamdig.config
 
 import net.kunmc.lab.configlib.BaseConfig
-import net.kunmc.lab.configlib.value.BooleanValue
-import net.kunmc.lab.configlib.value.ListValue
-import net.kunmc.lab.configlib.value.MapValue
-import net.kunmc.lab.configlib.value.StringListValue
+import net.kunmc.lab.configlib.value.*
 import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.plugin.Plugin
@@ -16,6 +13,19 @@ typealias BlockXZRange = Pair<BlockXZLocation, BlockXZLocation>
 
 class MainConfig(plugin: Plugin) : BaseConfig(plugin) {
     val isEnabled = BooleanValue(false)
+
+    // ダメージを受けたときの段数
+    val damageStackHeight = IntegerValue(1)
+
+    // 死んだときの段数
+    val deadStackHeight = IntegerValue(3)
+
+    // ダメージを受けたときのブロックの割合の計算定数
+    // (この定数 * 実際のダメージ量)[%]がブロックの割合になる
+    val damageBlockRateConst = DoubleValue(5.0)
+
+    // 死んだときのブロックの割合の定数[%]
+    val deadBlockRate = DoubleValue(100.0)
 
     // One String will be like this: <TeamName>,111:255,112:256
     private val selectedPosSet = StringListValue()
