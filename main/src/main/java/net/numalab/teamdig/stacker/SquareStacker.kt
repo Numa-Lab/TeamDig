@@ -21,7 +21,8 @@ class SquareStacker : BaseStacker() {
     ) {
         val range = Pair(startLocation, endLocation) as BlockXZRange
         val allPos =
-            range.allPos().map { Location(world, it.first.toDouble(), startHeight.toDouble(), it.second.toDouble()) }
+            range.allPos()
+                .map { Location(world, it.first.toDouble() + 0.5, startHeight.toDouble(), it.second.toDouble() + 0.5) }
         val materials = blockSet.generate(allPos.size)
 
         println("Spawning Size:${allPos.size}")
