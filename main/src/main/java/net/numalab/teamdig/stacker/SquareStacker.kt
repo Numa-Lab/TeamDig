@@ -20,13 +20,16 @@ class SquareStacker : BaseStacker() {
         startHeight: Int
     ) {
         val range = Pair(startLocation, endLocation) as BlockXZRange
-        val allPos =
-            range.allPos()
-                .map { Location(world, it.first.toDouble() + 0.5, startHeight.toDouble(), it.second.toDouble() + 0.5) }
-        val materials = blockSet.generate(allPos.size)
 
-        allPos.forEachIndexed { index, location ->
-            spawnFallingSand(materials[index], location)
+        (startHeight..startHeight+(stackHeight - 1)).forEach { height ->
+            val allPos =
+                range.allPos()
+                    .map { Location(world, it.first.toDouble() + 0.5, height.toDouble(), it.second.toDouble() + 0.5) }
+            val materials = blockSet.generate(range)
+
+            allPos.forEachIndexed { index, location ->
+                spawnFallingSand(materials[index], location)
+            }
         }
     }
 }
@@ -35,7 +38,7 @@ class SquareStacker : BaseStacker() {
  * 一面敷き詰めるやつのインタフェース
  */
 class FilledBlockSet(private val material: Material) : BlockSet {
-    override fun generate(size: Int): List<Material> {
-        return List(size) { material }
+    override fun generate(vararg locations: BlockXZLocation): List<Material> {
+        return List(locations.size) { material }
     }
 }

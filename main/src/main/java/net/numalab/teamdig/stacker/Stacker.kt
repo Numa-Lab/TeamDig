@@ -1,6 +1,7 @@
 package net.numalab.teamdig.stacker
 
 import net.numalab.teamdig.config.BlockXZLocation
+import net.numalab.teamdig.config.BlockXZRange
 import org.bukkit.Material
 import org.bukkit.World
 
@@ -25,5 +26,6 @@ interface Stacker {
  * 設定された確率に応じてマテリアルのリスト渡すやつ
  */
 interface BlockSet {
-    fun generate(size: Int): List<Material>
+    fun generate(range: BlockXZRange): List<Material> = generate(*(range.allPos().toTypedArray()))
+    fun generate(vararg locations: BlockXZLocation): List<Material>
 }
