@@ -13,14 +13,12 @@ import org.bukkit.World
 class SquareStacker : BaseStacker() {
     override fun stack(
         world: World,
-        centerLocation: BlockXZLocation,
-        range: Int,
+        startLocation: BlockXZLocation,
+        endLocation: BlockXZLocation,
         blockSet: BlockSet,
         stackHeight: Int,
         startHeight: Int
     ) {
-        val startLocation = Pair(centerLocation.first - range, centerLocation.second - range)
-        val endLocation = Pair(centerLocation.first + range, centerLocation.second + range)
         val range = Pair(startLocation, endLocation) as BlockXZRange
         val allPos =
             range.allPos().map { Location(world, it.first.toDouble(), startHeight.toDouble(), it.second.toDouble()) }

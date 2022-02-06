@@ -26,7 +26,6 @@ class FallCommand(config: MainConfig) : Command("fall") {
                     fail("チーム名:${teamName}のコンフィグが見つかりませんでした")
                     return@executes
                 }
-                val teamCenterLocation = teamConfig.second.center()
                 val stacker = SquareStacker()
                 val blockSet = FilledBlockSet(Material.STONE)
                 val world = this.world
@@ -35,7 +34,7 @@ class FallCommand(config: MainConfig) : Command("fall") {
                     return@executes
                 }
 
-                stacker.stack(world, teamCenterLocation, 10, blockSet, 1, 200)
+                stacker.stack(world, teamConfig.second.first, teamConfig.second.second, blockSet, 1, 200)
 
                 success("召喚に成功しました")
             }

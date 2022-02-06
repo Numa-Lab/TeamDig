@@ -52,7 +52,7 @@ class MainConfig(plugin: Plugin) : BaseConfig(plugin) {
         if (locString.size != 2) return null
         else {
             val x = locString[0].toIntOrNull()
-            val z = locString[0].toIntOrNull()
+            val z = locString[1].toIntOrNull()
 
             if (x == null || z == null) return null
             return Pair(x, z)

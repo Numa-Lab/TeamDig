@@ -12,11 +12,11 @@ interface Stacker {
      * @param stackHeight 何段積み上げるか
      */
     fun stack(
-        world:World,
-        centerLocation: BlockXZLocation,
-        range: Int,
+        world: World,
+        startLocation: BlockXZLocation,
+        endLocation: BlockXZLocation,
         blockSet: BlockSet,
-        stackHeight:Int,
+        stackHeight: Int,
         startHeight: Int = 256
     )
 }
