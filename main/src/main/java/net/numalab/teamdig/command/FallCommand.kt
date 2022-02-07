@@ -48,7 +48,7 @@ class FallCommand(config: MainConfig) : Command("fall") {
                     fail("ワールド取得に失敗しました")
                     return@executes
                 }
-
+                config.blockWorldName.value(world.name)
                 stacker.stack(world, teamConfig.second.first, teamConfig.second.second, blockSet, stackHeight, 200)
 
                 success("召喚に成功しました")

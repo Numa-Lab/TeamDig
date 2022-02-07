@@ -9,6 +9,7 @@ import net.numalab.teamdig.stacker.allPos
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.World
+import org.bukkit.scoreboard.DisplaySlot
 import org.bukkit.scoreboard.Objective
 import java.util.function.BiFunction
 
@@ -32,7 +33,11 @@ class ScoreBoardOperator(val config: MainConfig, plugin: Teamdig, var world: Wor
             if (t) {
                 // True に切り替わった -> スコアボード初期化
                 getObjective().unregister() // 初期化というより切り離す
-                if (u.world != null) world = u.world
+                getObjective().displaySlot = DisplaySlot.SIDEBAR
+                if (u.world != null) {
+                    world = u.world!!
+                    config.blockWorldName.value(u.world!!.name)
+                }
             }
             return@BiFunction false
         })

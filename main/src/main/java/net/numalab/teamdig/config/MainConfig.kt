@@ -27,6 +27,9 @@ class MainConfig(plugin: Plugin) : BaseConfig(plugin) {
     // 死んだときのブロックの割合の定数[%]
     val deadBlockRate = DoubleValue(100.0)
 
+    // 残りブロック数カウント対象のワールド名
+    val blockWorldName = StringValue("world")
+
     // One String will be like this: <TeamName>,111:255,112:256
     private val selectedPosSet = StringListValue()
     fun setPosSet(vararg poses: Pair<String, BlockXZRange>) {

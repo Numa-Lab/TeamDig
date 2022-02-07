@@ -40,6 +40,9 @@ class PosSelectCommand(config: MainConfig) : Command("selectPos") {
                 val result = existing.toMutableList().also { it.add(Pair(teamName, XZRange)) }
 
                 config.setPosSet(*result.toTypedArray())
+                if (world != null) {
+                    config.blockWorldName.value(world!!.name)
+                }
 
                 success("チーム:${teamName},Pos1:${firstLoc},Pos2:${secondLoc}で登録しました")
             }

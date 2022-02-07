@@ -25,7 +25,7 @@ class Teamdig : JavaPlugin() {
 
     override fun onEnable() {
         FallCaller.getInstance(config, this)
-        scoreboard = ScoreBoardOperator(config, this, server.getWorld("world"))
+        scoreboard = ScoreBoardOperator(config, this, server.getWorld(config.blockWorldName.value()))
         // Plugin startup logic
     }
 
