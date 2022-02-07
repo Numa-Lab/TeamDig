@@ -9,6 +9,7 @@ import net.numalab.teamdig.stacker.allPos
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.World
+import org.bukkit.scheduler.BukkitTask
 import org.bukkit.scoreboard.DisplaySlot
 import org.bukkit.scoreboard.Objective
 import java.util.function.BiFunction
@@ -16,9 +17,30 @@ import java.util.function.BiFunction
 /**
  * ブロック数を取得してスコアボードに反映する用のクラス
  */
-class ScoreBoardOperator(val config: MainConfig, plugin: Teamdig, var world: World?) {
+class ScoreBoardOperator(val config: MainConfig, val plugin: Teamdig, var world: World?) {
+    private var task: BukkitTask? = null
+
     init {
-        plugin.server.scheduler.runTaskTimer(
+        config.isEnabled.onModify<BooleanValue>(BiFunction { t: Boolean, u: CommandContext ->
+            if (t) {
+                initialize(u.world)
+            }
+            return@BiFunction false
+        })
+    }
+
+    fun initialize(world: World?) {
+        getObjective().unregister()
+        getObjective().displaySlot = DisplaySlot.SIDEBAR
+        if (world != null) {
+            this.world = world
+            config.blockWorldName.value(world.name)
+        }
+    }
+
+    fun enabled() {
+        if (task != null) return
+        task = plugin.server.scheduler.runTaskTimer(
             plugin,
             Runnable {
                 if (config.isEnabled.value()) {
@@ -28,19 +50,11 @@ class ScoreBoardOperator(val config: MainConfig, plugin: Teamdig, var world: Wor
             1,
             20
         )
+    }
 
-        config.isEnabled.onModify<BooleanValue>(BiFunction { t: Boolean, u: CommandContext ->
-            if (t) {
-                // True に切り替わった -> スコアボード初期化
-                getObjective().unregister() // 初期化というより切り離す
-                getObjective().displaySlot = DisplaySlot.SIDEBAR
-                if (u.world != null) {
-                    world = u.world!!
-                    config.blockWorldName.value(u.world!!.name)
-                }
-            }
-            return@BiFunction false
-        })
+    fun dispose() {
+        this.task?.cancel()
+        this.task = null
     }
 
     private fun getObjective(): Objective {

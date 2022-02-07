@@ -1,6 +1,7 @@
 package net.numalab.teamdig.command
 
 import dev.kotx.flylib.command.Command
+import net.numalab.teamdig.ScoreBoardOperator
 import net.numalab.teamdig.config.MainConfig
 import net.numalab.teamdig.stacker.DefaultBlockSet
 import net.numalab.teamdig.stacker.FilledBlockSet
@@ -8,7 +9,7 @@ import net.numalab.teamdig.stacker.SquareStacker
 import org.bukkit.Bukkit
 import org.bukkit.Material
 
-class FallCommand(config: MainConfig) : Command("fall") {
+class FallCommand(config: MainConfig, private val score: ScoreBoardOperator) : Command("fall") {
     init {
         description("This is a fall command of TeamDig")
         usage {
@@ -48,7 +49,7 @@ class FallCommand(config: MainConfig) : Command("fall") {
                     fail("ワールド取得に失敗しました")
                     return@executes
                 }
-                config.blockWorldName.value(world.name)
+                score.initialize(world)
                 stacker.stack(world, teamConfig.second.first, teamConfig.second.second, blockSet, stackHeight, 200)
 
                 success("召喚に成功しました")

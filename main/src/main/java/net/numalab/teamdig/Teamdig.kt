@@ -10,14 +10,18 @@ import org.bukkit.plugin.java.JavaPlugin
 
 class Teamdig : JavaPlugin() {
     val config = MainConfig(this)
-    lateinit var scoreboard: ScoreBoardOperator
+    private val scoreboard: ScoreBoardOperator =
+        ScoreBoardOperator(config, this, server.getWorld(config.blockWorldName.value()))
 
     init {
         flyLib {
             command(
                 MainCommand(
-                    config, ConfigCommandBuilder(config).build(), PosSelectCommand(config),
-                    FallCommand(config)
+                    config,
+                    scoreboard,
+                    ConfigCommandBuilder(config).build(),
+                    PosSelectCommand(config),
+                    FallCommand(config, scoreboard)
                 )
             )
         }
@@ -26,12 +30,14 @@ class Teamdig : JavaPlugin() {
     override fun onEnable() {
         FallCaller.getInstance(config, this)
         ForceBlockStacker.getInstance(config, this)
-        scoreboard = ScoreBoardOperator(config, this, server.getWorld(config.blockWorldName.value()))
+        scoreboard.world = server.getWorld(config.blockWorldName.value())
+        scoreboard.enabled()
         // Plugin startup logic
     }
 
     override fun onDisable() {
         // Plugin shutdown logic
+        scoreboard.dispose()
         config.saveConfigIfPresent()
     }
 }

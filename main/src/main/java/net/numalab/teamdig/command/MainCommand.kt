@@ -1,18 +1,20 @@
 package net.numalab.teamdig.command
 
 import dev.kotx.flylib.command.Command
+import net.numalab.teamdig.ScoreBoardOperator
 import net.numalab.teamdig.config.MainConfig
 import org.bukkit.command.BlockCommandSender
 import org.bukkit.entity.Player
 
-class MainCommand(mainConfig: MainConfig, vararg children: Command) : Command("teamdig") {
+class MainCommand(mainConfig: MainConfig, private val score: ScoreBoardOperator,vararg children: Command) :
+    Command("teamdig") {
     init {
         description("This is the main command of TeamDig Plugin.")
         children(*children)
         usage {
             selectionArgument("ON/OFF", listOf("ON", "OFF"))
             executes {
-                if(sender !is Player){
+                if (sender !is Player) {
                     fail("プレイヤーが実行してください")
                 }
 
@@ -23,6 +25,12 @@ class MainCommand(mainConfig: MainConfig, vararg children: Command) : Command("t
                 }
 
                 mainConfig.isEnabled.value(bool)
+
+                if (bool) {
+                    // Trueになった
+                    score.initialize(world)
+                }
+
                 success(
                     "${
                         if (bool) {
