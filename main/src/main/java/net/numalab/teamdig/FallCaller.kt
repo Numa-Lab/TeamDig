@@ -15,6 +15,8 @@ import org.bukkit.event.entity.EntityDamageByBlockEvent
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.PlayerDeathEvent
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  * 誰かが死んだら/ダメージを受けたらfall関数を呼ぶ
@@ -80,7 +82,7 @@ class FallCaller(val config: MainConfig, plugin: Teamdig) : Listener {
      */
     private fun doFall(range: BlockXZRange, blockRate: Double, stackHeight: Int, world: World) {
         if (config.isEnabled.value()) {
-            blockSet.airRate = 1 - blockRate
+            blockSet.airRate = min(1.0, max(1 - blockRate, 0.0))
             stacker.stack(world, range.first, range.second, blockSet, stackHeight, config.blockFallStartHeight.value())
         }
     }
