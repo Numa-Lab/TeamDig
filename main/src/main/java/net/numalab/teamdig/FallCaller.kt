@@ -46,7 +46,7 @@ class FallCaller(val config: MainConfig, plugin: Teamdig) : Listener {
     @EventHandler
     fun onDamage(e: EntityDamageEvent) {
         if (e.entity is Player) {
-            onDamage(e.entity as Player, e.damage)
+            onDamage(e.entity as Player, e.finalDamage)
         }
     }
 
