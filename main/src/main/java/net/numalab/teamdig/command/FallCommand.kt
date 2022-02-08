@@ -50,7 +50,7 @@ class FallCommand(config: MainConfig, private val score: ScoreBoardOperator) : C
                     return@executes
                 }
                 score.initialize(world)
-                stacker.stack(world, teamConfig.second.first, teamConfig.second.second, blockSet, stackHeight, 200)
+                stacker.stack(world, teamConfig.second.first, teamConfig.second.second, blockSet, stackHeight, config.blockFallStartHeight.value())
 
                 success("召喚に成功しました")
             }

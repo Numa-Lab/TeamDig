@@ -81,7 +81,7 @@ class FallCaller(val config: MainConfig, plugin: Teamdig) : Listener {
     private fun doFall(range: BlockXZRange, blockRate: Double, stackHeight: Int, world: World) {
         if (config.isEnabled.value()) {
             blockSet.airRate = 1 - blockRate
-            stacker.stack(world, range.first, range.second, blockSet, stackHeight, 256)
+            stacker.stack(world, range.first, range.second, blockSet, stackHeight, config.blockFallStartHeight.value())
         }
     }
 }

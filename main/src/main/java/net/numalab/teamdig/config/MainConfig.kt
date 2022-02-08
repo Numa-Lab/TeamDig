@@ -30,6 +30,9 @@ class MainConfig(plugin: Plugin) : BaseConfig(plugin) {
     // 残りブロック数カウント対象のワールド名
     val blockWorldName = StringValue("world")
 
+    // ブロックの降り始めの高さ
+    val blockFallStartHeight = IntegerValue(256, 1, Integer.MAX_VALUE)
+
     // One String will be like this: <TeamName>,111:255,112:256
     private val selectedPosSet = StringListValue()
     fun setPosSet(vararg poses: Pair<String, BlockXZRange>) {
