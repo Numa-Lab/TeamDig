@@ -2,8 +2,6 @@ package net.numalab.teamdig.config
 
 import net.kunmc.lab.configlib.BaseConfig
 import net.kunmc.lab.configlib.value.*
-import org.bukkit.Location
-import org.bukkit.World
 import org.bukkit.plugin.Plugin
 
 
@@ -32,6 +30,16 @@ class MainConfig(plugin: Plugin) : BaseConfig(plugin) {
 
     // ブロックの降り始めの高さ
     val blockFallStartHeight = IntegerValue(256, 1, Integer.MAX_VALUE)
+
+    // ダメージ発生時の通知のON/OFF
+    val damageLogging = BooleanValue(true)
+
+    // ダメージ発生時の通知の種類
+    val damageLoggingType = EnumValue(Type.CHAT)
+
+    enum class Type {
+        CHAT, SUBTITLE
+    }
 
     // One String will be like this: <TeamName>,111:255,112:256
     private val selectedPosSet = StringListValue()

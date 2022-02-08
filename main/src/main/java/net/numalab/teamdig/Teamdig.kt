@@ -12,6 +12,7 @@ class Teamdig : JavaPlugin() {
     val config = MainConfig(this)
     private val scoreboard: ScoreBoardOperator =
         ScoreBoardOperator(config, this, server.getWorld(config.blockWorldName.value()))
+    private val damageNotifier = DamageNotifier(config, this)
 
     init {
         flyLib {
@@ -30,6 +31,7 @@ class Teamdig : JavaPlugin() {
     override fun onEnable() {
         FallCaller.getInstance(config, this)
         ForceBlockStacker.getInstance(config, this)
+        damageNotifier.onEnable()
         scoreboard.world = server.getWorld(config.blockWorldName.value())
         scoreboard.enabled()
         // Plugin startup logic
@@ -37,6 +39,7 @@ class Teamdig : JavaPlugin() {
 
     override fun onDisable() {
         // Plugin shutdown logic
+        damageNotifier.onDisable()
         scoreboard.dispose()
         config.saveConfigIfPresent()
     }
