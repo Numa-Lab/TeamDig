@@ -4,8 +4,8 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.title.Title.title
 import net.numalab.teamdig.config.BlockXZRange
+import net.numalab.teamdig.config.ChatNotifyType
 import net.numalab.teamdig.config.MainConfig
-import net.numalab.teamdig.config.MainConfig.Type.*
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -51,12 +51,13 @@ class DamageNotifier(val config: MainConfig, private val plugin: Teamdig) : List
     private fun notifyDamage(entity: Player, amount: Double, team: Team) {
         if (amount <= 0.0) return
         if (!config.isEnabled.value()) return
+        if (!config.damageLogging.value()) return
         val component = notifyDamageComponent(entity, (amount * 10.0).roundToInt() / 10.0, team)
         when (config.damageLoggingType.value()) {
-            CHAT -> {
+            ChatNotifyType.CHAT -> {
                 Bukkit.broadcast(component)
             }
-            SUBTITLE -> {
+            ChatNotifyType.SUBTITLE -> {
                 Bukkit.getOnlinePlayers().forEach {
                     it.showTitle(title(Component.empty(), component))
                 }

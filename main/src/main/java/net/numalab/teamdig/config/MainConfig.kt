@@ -35,11 +35,7 @@ class MainConfig(plugin: Plugin) : BaseConfig(plugin) {
     val damageLogging = BooleanValue(true)
 
     // ダメージ発生時の通知の種類
-    val damageLoggingType = EnumValue(Type.CHAT)
-
-    enum class Type {
-        CHAT, SUBTITLE
-    }
+    val damageLoggingType = EnumValue<ChatNotifyType>(ChatNotifyType.CHAT)
 
     // One String will be like this: <TeamName>,111:255,112:256
     private val selectedPosSet = StringListValue()
@@ -87,4 +83,8 @@ class MainConfig(plugin: Plugin) : BaseConfig(plugin) {
         saveConfigIfAbsent()
         loadConfig()
     }
+}
+
+enum class ChatNotifyType {
+    CHAT, SUBTITLE
 }
