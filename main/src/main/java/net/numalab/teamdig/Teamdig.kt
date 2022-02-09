@@ -22,7 +22,7 @@ class Teamdig : JavaPlugin() {
                     scoreboard,
                     ConfigCommandBuilder(config).build(),
                     PosSelectCommand(config),
-                    FallCommand(config, scoreboard)
+                    FallCommand(config, this@Teamdig, scoreboard)
                 )
             )
         }

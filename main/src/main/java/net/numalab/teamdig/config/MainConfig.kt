@@ -37,6 +37,15 @@ class MainConfig(plugin: Plugin) : BaseConfig(plugin) {
     // ダメージ発生時の通知の種類
     val damageLoggingType = EnumValue<ChatNotifyType>(ChatNotifyType.CHAT)
 
+    // 軽量化措置用のコンフィグ
+    // 同一Y軸上に〇段/個以上が出現したときに軽量化を適用
+    // (つまり〇段/個目以降に適用)
+    val optimizeStartStackHeight = IntegerValue(2, 0, Integer.MAX_VALUE)
+
+    // 軽量化措置時に、ダメージ/死亡から何Tick待ってから
+    // ブロックを設置するか
+    val optimizeWaitTime = IntegerValue(20, 0, Integer.MAX_VALUE)
+
     // One String will be like this: <TeamName>,111:255,112:256
     private val selectedPosSet = StringListValue()
     fun setPosSet(vararg poses: Pair<String, BlockXZRange>) {

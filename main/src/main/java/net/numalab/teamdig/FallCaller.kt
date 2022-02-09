@@ -4,6 +4,7 @@ import net.numalab.teamdig.config.BlockXZRange
 import net.numalab.teamdig.config.MainConfig
 import net.numalab.teamdig.stacker.DefaultBlockSet
 import net.numalab.teamdig.stacker.FilledBlockSet
+import net.numalab.teamdig.stacker.OptimizedSquareStacker
 import net.numalab.teamdig.stacker.SquareStacker
 import org.bukkit.Bukkit
 import org.bukkit.Material
@@ -40,7 +41,7 @@ class FallCaller(val config: MainConfig, plugin: Teamdig) : Listener {
         plugin.server.pluginManager.registerEvents(this, plugin)
     }
 
-    private val stacker = SquareStacker()
+    private val stacker = OptimizedSquareStacker(config,plugin)
     private val blockSet = DefaultBlockSet(0.0)
 
     @EventHandler
