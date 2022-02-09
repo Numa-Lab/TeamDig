@@ -125,12 +125,8 @@ class OptimizedSquareStacker(
          * @return あるY軸にここからスポーンしていいか
          */
         fun isAccepted(loc: BlockXZLocation): Boolean {
-            val en = internalMap[loc]
-            return if (en == null) {
-                true
-            } else {
-                config.optimizeStartStackHeight.value() > en
-            }
+            val en = internalMap.getOrDefault(loc, 0)
+            return config.optimizeStartStackHeight.value() > en
         }
 
         /**
