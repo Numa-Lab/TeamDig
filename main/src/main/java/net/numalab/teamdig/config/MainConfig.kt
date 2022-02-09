@@ -45,7 +45,7 @@ class MainConfig(plugin: Plugin) : BaseConfig(plugin) {
 
     // 軽量化措置時に、ダメージ/死亡から何Tick待ってから
     // ブロックを設置するか
-    val optimizeWaitTime = IntegerValue(20, 0, Integer.MAX_VALUE)
+    val optimizeWaitTime = IntegerValue(20, 1, Integer.MAX_VALUE)
 
     // One String will be like this: <TeamName>,111:255,112:256
     private val selectedPosSet = StringListValue()
