@@ -3,17 +3,12 @@ package net.numalab.teamdig
 import net.numalab.teamdig.config.BlockXZRange
 import net.numalab.teamdig.config.MainConfig
 import net.numalab.teamdig.stacker.DefaultBlockSet
-import net.numalab.teamdig.stacker.FilledBlockSet
 import net.numalab.teamdig.stacker.OptimizedSquareStacker
-import net.numalab.teamdig.stacker.SquareStacker
 import org.bukkit.Bukkit
-import org.bukkit.Material
 import org.bukkit.World
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import org.bukkit.event.entity.EntityDamageByBlockEvent
-import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import kotlin.math.max
@@ -84,7 +79,7 @@ class FallCaller(val config: MainConfig, plugin: Teamdig) : Listener {
     private fun doFall(range: BlockXZRange, blockRate: Double, stackHeight: Int, world: World) {
         if (config.isEnabled.value()) {
             blockSet.airRate = min(1.0, max(1 - blockRate, 0.0))
-            stacker.stack(world, range.first, range.second, blockSet, stackHeight, config.blockFallStartHeight.value())
+            stacker.stack(world, range.first, range.second, blockSet, stackHeight)
         }
     }
 }

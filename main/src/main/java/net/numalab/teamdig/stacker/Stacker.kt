@@ -17,8 +17,7 @@ interface Stacker {
         startLocation: BlockXZLocation,
         endLocation: BlockXZLocation,
         blockSet: BlockSet,
-        stackHeight: Int,
-        startHeight: Int = 256
+        stackHeight: Int
     )
 }
 

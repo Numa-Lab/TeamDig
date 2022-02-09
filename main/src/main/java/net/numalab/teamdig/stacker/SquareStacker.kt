@@ -10,8 +10,19 @@ import org.bukkit.World
  * 四角形の範囲で降らせるやつ
  * rangeが一辺の**半分の長さ**になるよ
  */
+@Deprecated("Use OptimizedSquareStacker")
 class SquareStacker : BaseStacker() {
     override fun stack(
+        world: World,
+        startLocation: BlockXZLocation,
+        endLocation: BlockXZLocation,
+        blockSet: BlockSet,
+        stackHeight: Int
+    ) {
+        stack(world, startLocation, endLocation, blockSet, stackHeight, 256)
+    }
+
+    fun stack(
         world: World,
         startLocation: BlockXZLocation,
         endLocation: BlockXZLocation,
@@ -21,7 +32,7 @@ class SquareStacker : BaseStacker() {
     ) {
         val range = Pair(startLocation, endLocation) as BlockXZRange
 
-        (startHeight..startHeight+(stackHeight - 1)).forEach { height ->
+        (startHeight..startHeight + (stackHeight - 1)).forEach { height ->
             val allPos =
                 range.allPos()
                     .map { Location(world, it.first.toDouble() + 0.5, height.toDouble(), it.second.toDouble() + 0.5) }
@@ -32,6 +43,7 @@ class SquareStacker : BaseStacker() {
             }
         }
     }
+
 }
 
 /**

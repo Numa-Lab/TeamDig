@@ -28,8 +28,9 @@ class MainConfig(plugin: Plugin) : BaseConfig(plugin) {
     // 残りブロック数カウント対象のワールド名
     val blockWorldName = StringValue("world")
 
-    // ブロックの降り始めの高さ
-    val blockFallStartHeight = IntegerValue(256, 1, Integer.MAX_VALUE)
+    // ブロックの降り始めのオフセット
+    // その範囲で一番高いブロックから何ブロック上に降らせるか
+    val blockFallStartOffset = IntegerValue(20, 1, Integer.MAX_VALUE)
 
     // ダメージ発生時の通知のON/OFF
     val damageLogging = BooleanValue(true)

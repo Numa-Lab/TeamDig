@@ -26,21 +26,20 @@ class OptimizedSquareStacker(
         startLocation: BlockXZLocation,
         endLocation: BlockXZLocation,
         blockSet: BlockSet,
-        stackHeight: Int,
-        startHeight: Int
+        stackHeight: Int
     ) {
         val range = Pair(startLocation, endLocation) as BlockXZRange
-
-        (startHeight..startHeight + (stackHeight - 1)).forEach { height ->
-            val allPos = range.allPos()
+        val allPos = range.allPos()
+        val highestYInRange = allPos.maxOf { world.getHighestBlockAt(it.first, it.second).location.blockY }
+        (0..0 + (stackHeight - 1)).forEach { offset ->
             val materials = blockSet.generate(range)
             allPos.forEachIndexed { index, location ->
-                spawn(materials[index], location, world, height)
+                spawn(materials[index], location, world, highestYInRange + offset)
             }
         }
     }
 
-    private fun spawn(material: Material, loc: BlockXZLocation, world: World, height: Int) {
+    private fun spawn(material: Material, loc: BlockXZLocation, world: World, highestYInRange: Int) {
         if (material == Material.AIR) {
             return
         }
@@ -48,12 +47,19 @@ class OptimizedSquareStacker(
         if (optimizer.isAccepted(loc)) {
             spawnFallingSand(
                 material,
-                Location(world, loc.first.toDouble() + 0.5, height.toDouble(), loc.second.toDouble() + 0.5)
+                loc,
+                world,
+                highestYInRange + config.blockFallStartOffset.value()
             )
             optimizer.spawnedAt(loc)
         } else {
             directSetBlockAddTimer(material, loc, world, config.optimizeWaitTime.value())
         }
+    }
+
+    private fun spawnFallingSand(material: Material, loc: BlockXZLocation, world: World, targetHeight: Int) {
+        val spawn = Location(world, loc.first.toDouble() + 0.5, targetHeight.toDouble(), loc.second.toDouble() + 0.5)
+        spawnFallingSand(material, spawn)
     }
 
     init {

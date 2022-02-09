@@ -5,11 +5,8 @@ import net.numalab.teamdig.ScoreBoardOperator
 import net.numalab.teamdig.Teamdig
 import net.numalab.teamdig.config.MainConfig
 import net.numalab.teamdig.stacker.DefaultBlockSet
-import net.numalab.teamdig.stacker.FilledBlockSet
 import net.numalab.teamdig.stacker.OptimizedSquareStacker
-import net.numalab.teamdig.stacker.SquareStacker
 import org.bukkit.Bukkit
-import org.bukkit.Material
 
 class FallCommand(config: MainConfig, plugin: Teamdig, private val score: ScoreBoardOperator) : Command("fall") {
     init {
@@ -57,8 +54,7 @@ class FallCommand(config: MainConfig, plugin: Teamdig, private val score: ScoreB
                     teamConfig.second.first,
                     teamConfig.second.second,
                     blockSet,
-                    stackHeight,
-                    config.blockFallStartHeight.value()
+                    stackHeight
                 )
 
                 success("召喚に成功しました")
